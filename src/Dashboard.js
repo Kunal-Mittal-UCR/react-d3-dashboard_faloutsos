@@ -16,62 +16,69 @@ export default class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedUser: data[0],
-            greaterThenAge: 0,
-            includedGender: ['Male', 'Female','Unknown'],
+            C2_Family: "Mirai",
+            C2_Country: "China",
+            C2_Date : 2010, 
         }
     }
 
-    changeSelectUser = value => {
+    changeC2Family = value => {
         this.setState({
-            selectedUser: value
+            C2_Family: value
         })
     }
 
-    changeGreaterThenAge = value => {
+    changeC2Country = value => {
         this.setState({
-            greaterThenAge: value
+            C2_Country: value
         })
     }
 
-    changeIncludedGender = value => {
+    changeDate = value => {
         this.setState({
-            includedGender: value
+            C2_Date: value
         })
     }
 
     render() {
-        const {selectedUser, greaterThenAge, includedGender} = this.state;
-        const filteredData = data.filter(user=>includedGender.indexOf(user.gender)!==-1)
-                                 .filter(user=>user.age>greaterThenAge);
+        const {C2_Family, C2_Country, C2_Date} = this.state;
+        const c2_family_objects= data.filter(user=>C2_Family===user['C2 Family'])
+        const c2_date_objects= data.filter(user=>C2_Date===user.Date)
         return (
             <div>
                 <Layout style={{ height: 920 }}>
-                    <Sider width={300} style={{backgroundColor:'#eee'}}>
+                    <Sider width={500} style={{backgroundColor:'#eee'}}>
                         <Content style={{ height: 200 }}>
-                            <View1 user={selectedUser}/>
+                            <View1 fam={C2_Family}/>
                         </Content>
+                         
+                        
                         <Content style={{ height: 300 }}>
-                            <View2 data={filteredData}/>
+                            <View2 data={c2_family_objects}/>
                         </Content>
+                        {/*
                         <Content style={{ height: 400 }}>
                             <View3 
-                                changeGreaterThenAge={this.changeGreaterThenAge}
-                                changeIncludedGender={this.changeIncludedGender}
+                                changeC2Country={this.changeC2Country}
+                                changeDate={this.changeDate}
                             />
-                        </Content>
+                        </Content>*/}
                     </Sider>
                     <Layout>
+                    {/*
                         <Content style={{ height: 300 }}>
-                            <View4 user={selectedUser}/>
+                            <View4 user={C2_Object}/>
                         </Content>
+                    */}
                         <Layout style={{ height: 600 }}>
                             <Content>
-                                <View5 data={filteredData}/>
+                                <View5 data={c2_date_objects}/>
                             </Content>
+                        {/*
                             <Sider width={300} style={{backgroundColor:'#eee'}}>
-                                <View6 data={filteredData} changeSelectUser={this.changeSelectUser}/>
+                                <View6 data={filteredData} changeC2Family={this.changeSelectUser}/>
                             </Sider>
+                */}
                         </Layout>
                     </Layout>
                 </Layout>

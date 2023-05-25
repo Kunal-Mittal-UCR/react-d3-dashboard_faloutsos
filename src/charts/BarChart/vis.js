@@ -13,10 +13,6 @@ const draw = (props) => {
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // format the data
-    data.forEach(function(d) {
-        d.age = +d.age;
-    });
 
     // Scale the range of the data in the domains
     let x = d3.scaleBand()
@@ -24,18 +20,26 @@ const draw = (props) => {
           .padding(0.1);
     let y = d3.scaleLinear()
           .range([height, 0]);
-    x.domain(data.map(function(d) { return d.name; }));
-    y.domain([0, d3.max(data, function(d) { return d.age; })]);
 
+    x.domain(Object.keys(data));
+    y.domain([0, d3.max(Object.values(data))]);
+    console.log(d3.max(Object.values(data)));
+
+/*    console.log(svg.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { console.log("ASDJKFHLKLSDJHFKLSJDHF"); })
+    );*/
     // append the rectangles for the bar chart
     svg.selectAll(".bar")
         .data(data)
         .enter().append("rect")
         .attr("class", "bar")
-        .attr("x", function(d) { return x(d.name); })
+        .attr("x", function(d) { return Object.keys(data)[d]})
         .attr("width", x.bandwidth())
-        .attr("y", function(d) { return y(d.age); })
-        .attr("height", function(d) { return height - y(d.age); });
+        .attr("y", function(d) { return Object.values(data)[d] })
+        .attr("height", function(d) { return height - Object.values(data)[d]; });
 
     // add the x Axis
     svg.append("g")
