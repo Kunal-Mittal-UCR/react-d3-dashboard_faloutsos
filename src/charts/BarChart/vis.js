@@ -21,10 +21,15 @@ const draw = (props) => {
     let y = d3.scaleLinear()
           .range([height, 0]);
 
-    x.domain(Object.keys(data));
-    y.domain([0, d3.max(Object.values(data))]);
-    console.log(d3.max(Object.values(data)));
-
+    console.log(typeof(data))
+    const adjusted_year_count = {}
+    for(let key in data){
+        adjusted_year_count["Date"] = key;
+        adjusted_year_count["Counts"] = data[key];
+    }
+    
+    x.domain(data.map(function(d) { return d.Date; }));
+    y.domain([0, d3.max(data, function(d) { return d.Counts; })]);
 /*    console.log(svg.selectAll(".bar")
         .data(data)
         .enter().append("rect")
